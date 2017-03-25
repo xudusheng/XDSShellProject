@@ -1,0 +1,16 @@
+PODS:
+  - XDSShellProject (0.1.0)
+
+DEPENDENCIES:
+  - XDSShellProject (from `../`)
+
+EXTERNAL SOURCES:
+  XDSShellProject:
+    :path: ../
+
+SPEC CHECKSUMS:
+  XDSShellProject: 43ed0a3d0d22027c403c388eeee95dce4f963f6d
+
+PODFILE CHECKSUM: 7a594dde5c4ddef6abb2d7bcaae3de7fff0c961b
+
+COCOAPODS: 1.2.0
