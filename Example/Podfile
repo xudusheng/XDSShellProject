@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'XDSShellProject_Example' do
+  pod 'XDSShellProject', :path => '../'
+
+  target 'XDSShellProject_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
