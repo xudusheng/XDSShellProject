@@ -8,10 +8,11 @@
 
 @import UIKit;
 #import "XDSAppDelegate.h"
-
+#import "XDSSPAppDelegate.h"
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([XDSAppDelegate class]));
+        XDSSPAppDelegate.rootViewControllerClassString = @"XDSViewController";
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([XDSSPAppDelegate class]));
     }
 }
