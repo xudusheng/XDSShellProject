@@ -18,8 +18,26 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor redColor];
-	// Do any additional setup after loading the view, typically from a nib.
+
+
+    ({
+        
+        UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(0, 0, 70, 44);
+        button.center = self.view.center;
+        [button setTitle:@"检查模块更新" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:13];
+        [button addTarget:self action:@selector(checkModuleVersion:) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.titleView = button;
+    });
 }
+
+- (void)checkModuleVersion:(UIButton *)btton{
+    NSLog(@"xxxxxxxxxxxx");
+
+}
+
 
 - (void)didReceiveMemoryWarning
 {

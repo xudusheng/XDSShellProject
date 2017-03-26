@@ -8,6 +8,7 @@
 
 #import "XDSSPAppDelegate.h"
 #import "XDSShellProject.h"
+#import <objc/runtime.h>
 #if HasModuleManager
 #import <XDSModuleManager/XDSModuleManager.h>
 #endif
@@ -19,7 +20,10 @@
     [self registerModules];
     [self launchModulesWithApplication:application options:launchOptions];
     
-    UIViewController *rootViewController = [self.class classRootViewController];
+    NSAssert(self.class.rootViewControllerClassString, @"请设置初始化类的名称");
+    NSAssert(NSClassFromString(self.class.rootViewControllerClassString), @"没有找到名为%@类", self.class.rootViewControllerClassString);
+    
+    UIViewController *rootViewController = nil;
     if (self.class.rootViewControllerClassString) {
         Class cls = NSClassFromString(self.class.rootViewControllerClassString);
         if (cls) {
@@ -30,8 +34,6 @@
     self.rootViewController = rootViewController;
     [self.window makeKeyAndVisible];
     
-    [self.class setClassRootViewController:rootViewController];
-
     return YES;
 }
 
@@ -130,18 +132,5 @@ static NSString *_rootViewControllerClassString = nil;
 }
 
 
-static UIViewController *_classRootViewController = nil;
-+ (void)setClassRootViewController:(UIViewController *)classRootViewController{
-    _classRootViewController = classRootViewController;
-
-}
-
-+ (UIViewController *)classRootViewController{
-    return _classRootViewController;
-}
-
-- (UIViewController *)rootViewController{
-    return self.class.classRootViewController;
-}
 
 @end

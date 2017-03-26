@@ -9,13 +9,11 @@
 @import UIKit;
 #import "XDSAppDelegate.h"
 #import "XDSSPAppDelegate.h"
+#import "XDSViewController.h"
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-//        XDSSPAppDelegate.rootViewControllerClassString = @"XDSViewController";
-        UIViewController * vc = [[UIViewController alloc] init];
-        vc.view.backgroundColor = [UIColor blueColor];
-        XDSSPAppDelegate.classRootViewController = vc;
+        XDSSPAppDelegate.rootViewControllerClassString = @"XDSViewController";
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([XDSSPAppDelegate class]));
     }
 }
