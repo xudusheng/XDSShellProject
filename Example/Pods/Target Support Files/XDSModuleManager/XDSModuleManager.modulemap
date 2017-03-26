@@ -1,0 +1,6 @@
+framework module XDSModuleManager {
+  umbrella header "XDSModuleManager-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -10,9 +10,3 @@
 #endif
 #endif
 
-#import "XDSShellProject.h"
-#import "XDSSPAppDelegate.h"
-
-FOUNDATION_EXPORT double XDSShellProjectVersionNumber;
-FOUNDATION_EXPORT const unsigned char XDSShellProjectVersionString[];
-

@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) UIViewController *rootViewController;
+
 @property (class, nonatomic, copy) NSString *rootViewControllerClassString;
+@property (class, nonatomic, strong)UIViewController *classRootViewController;
 
 @end

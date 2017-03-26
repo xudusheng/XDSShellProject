@@ -1,7 +1,9 @@
 PODS:
-  - XDSShellProject (0.1.0)
+  - XDSModuleManager (0.1.0)
+  - XDSShellProject (0.1.3)
 
 DEPENDENCIES:
+  - XDSModuleManager
   - XDSShellProject (from `../`)
 
 EXTERNAL SOURCES:
@@ -9,8 +11,9 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  XDSShellProject: 43ed0a3d0d22027c403c388eeee95dce4f963f6d
+  XDSModuleManager: 894eca470a7a7a6825746dea6c8057a39702c7ef
+  XDSShellProject: 87dfc3f01885335f8c15c17b34802c7145daaee4
 
-PODFILE CHECKSUM: 7a594dde5c4ddef6abb2d7bcaae3de7fff0c961b
+PODFILE CHECKSUM: 114f68c98a15f7ebd5e0792ee4ff515d6185cb2b
 
 COCOAPODS: 1.2.0

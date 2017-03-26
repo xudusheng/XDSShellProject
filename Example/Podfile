@@ -1,8 +1,13 @@
+
+source 'https://github.com/CocoaPods/Specs.git'
+source "git@github.com:xudusheng/XDSKitSpec.git"
+
 use_frameworks!
 
 target 'XDSShellProject_Example' do
   pod 'XDSShellProject', :path => '../'
-
+  pod 'XDSModuleManager'
+  
   target 'XDSShellProject_Tests' do
     inherit! :search_paths
 

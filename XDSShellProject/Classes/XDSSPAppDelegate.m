@@ -7,13 +7,19 @@
 //
 
 #import "XDSSPAppDelegate.h"
+#import "XDSShellProject.h"
+#if HasModuleManager
+#import <XDSModuleManager/XDSModuleManager.h>
+#endif
 
 @implementation XDSSPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
+    [self registerModules];
+    [self launchModulesWithApplication:application options:launchOptions];
     
-    UIViewController *rootViewController = _rootViewController;
+    UIViewController *rootViewController = [self.class classRootViewController];
     if (self.class.rootViewControllerClassString) {
         Class cls = NSClassFromString(self.class.rootViewControllerClassString);
         if (cls) {
@@ -24,23 +30,87 @@
     self.rootViewController = rootViewController;
     [self.window makeKeyAndVisible];
     
+    [self.class setClassRootViewController:rootViewController];
+
     return YES;
 }
 
+//注册模块相关的服务
+- (void)registerModules {
+#if HasModuleManager
+    [[[XDSModuleManager sharedInstance] modules] enumerateObjectsUsingBlock:^(id<XDSModuleManagerProtocol> module, NSUInteger idx, BOOL * stop) {
+        [module registerServices];
+    }];
+#endif
+}
 
-- (void)applicationWillResignActive:(UIApplication *)application{}
 
-- (void)applicationDidEnterBackground:(UIApplication *)application{}
+- (void)launchModulesWithApplication:(UIApplication *)application options:(NSDictionary *)launchOptions{
+#if HasModuleManager
+    [[[XDSModuleManager sharedInstance] modules] enumerateObjectsUsingBlock:^(id<XDSModuleManagerProtocol> module, NSUInteger idx, BOOL * stop) {
+        if ([module respondsToSelector:@selector(application:didFinishLaunchingWithOptions:)]) {
+            [module application:application didFinishLaunchingWithOptions:launchOptions];
+        }
+    }];
+#endif
+}
 
-- (void)applicationWillEnterForeground:(UIApplication *)application{}
+- (void)applicationWillResignActive:(UIApplication *)application{
+#if HasModuleManager
+    [[[XDSModuleManager sharedInstance] modules] enumerateObjectsUsingBlock:^(id<XDSModuleManagerProtocol> module, NSUInteger idx, BOOL * stop) {
+        if ([module respondsToSelector:@selector(applicationWillResignActive:)]) {
+            [module applicationWillResignActive:application];
+        }
+    }];
+#endif
+}
 
-- (void)applicationDidBecomeActive:(UIApplication *)application{}
+- (void)applicationDidEnterBackground:(UIApplication *)application{
+#if HasModuleManager
+    [[[XDSModuleManager sharedInstance] modules] enumerateObjectsUsingBlock:^(id<XDSModuleManagerProtocol> module, NSUInteger idx, BOOL * stop) {
+        if ([module respondsToSelector:@selector(applicationDidEnterBackground:)]) {
+            [module applicationDidEnterBackground:application];
+        }
+    }];
+#endif
+}
 
-- (void)applicationWillTerminate:(UIApplication *)application{}
+- (void)applicationWillEnterForeground:(UIApplication *)application{
+#if HasModuleManager
+    [[[XDSModuleManager sharedInstance] modules] enumerateObjectsUsingBlock:^(id<XDSModuleManagerProtocol> module, NSUInteger idx, BOOL * stop) {
+        if ([module respondsToSelector:@selector(applicationWillEnterForeground:)]) {
+            [module applicationWillEnterForeground:application];
+        }
+    }];
+#endif
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+#if HasModuleManager
+    [[[XDSModuleManager sharedInstance] modules] enumerateObjectsUsingBlock:^(id<XDSModuleManagerProtocol> module, NSUInteger idx, BOOL * stop) {
+        if ([module respondsToSelector:@selector(applicationDidBecomeActive:)]) {
+            [module applicationDidBecomeActive:application];
+        }
+    }];
+#endif
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application{
+#if HasModuleManager
+    [[[XDSModuleManager sharedInstance] modules] enumerateObjectsUsingBlock:^(id<XDSModuleManagerProtocol> module, NSUInteger idx, BOOL * stop) {
+        if ([module respondsToSelector:@selector(applicationWillTerminate:)]) {
+            [module applicationWillTerminate:application];
+        }
+    }];
+#endif
+}
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication{return YES;}
+  sourceApplication:(NSString *)sourceApplication{
+
+    return YES;
+}
 
 # pragma mark - 组件
 - (UIWindow *)window {
@@ -57,6 +127,21 @@ static NSString *_rootViewControllerClassString = nil;
 
 + (NSString *)rootViewControllerClassString {
     return _rootViewControllerClassString;
+}
+
+
+static UIViewController *_classRootViewController = nil;
++ (void)setClassRootViewController:(UIViewController *)classRootViewController{
+    _classRootViewController = classRootViewController;
+
+}
+
++ (UIViewController *)classRootViewController{
+    return _classRootViewController;
+}
+
+- (UIViewController *)rootViewController{
+    return self.class.classRootViewController;
 }
 
 @end
